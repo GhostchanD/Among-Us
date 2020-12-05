@@ -8,3 +8,7 @@ function size(obj: objects) :: integer:
 
 function world_players(world: string) :: players:
     return all players in world {_world} parsed as world
+
+command /back:
+    trigger:
+        room_quit(player)

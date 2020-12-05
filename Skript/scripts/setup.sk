@@ -4,6 +4,8 @@ command /setup:
         if "among_us_waiting_room" parsed as world is loaded:
             send "&c既にセットアップがされています"
             stop
+        
+        #waiting room
         command "/mv create among_us_waiting_room normal -t flat -a false"
         wait 1 seconds
         command "/mv modify set monsters false among_us_waiting_room"
@@ -11,3 +13,16 @@ command /setup:
         command "/mv modify set diff 0 among_us_waiting_room"
         command "/mv modify set gamemode 2 among_us_waiting_room"
         command "/mv modify set autoload true among_us_waiting_room"
+        send "&aSuccess Setup"
+
+command /setlobby:
+    permission: siso
+    trigger:
+        set {lobby} to location of player
+        send "&aSuccess set lobby"
+
+command /setwaitingroomspawn:
+    permission: siso
+    trigger:
+        set {waiting_room_spawn_location} to location of player
+        send "&aSuccess set waiting room spawn"

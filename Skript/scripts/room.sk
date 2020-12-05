@@ -36,7 +36,7 @@ On anvil gui done:
 function room_settings(p: player, room_name: string):
 	open chest with 1 row named "&9&lRoom Settings" to {_p}
 	send "%{_room_name}%" to {_p}
-	if {playerdata.%{_p}%::room} is not set:
+	if {playerdata.%{_p}%::has_room} is not set:
 		set {_private} to false
 		set {_room_name} to {_room_name}
 	else:
@@ -119,6 +119,7 @@ function room_create(id: string, room_name: string, private: boolean = false, p:
 	set {room::%{_id}%::private} to {_private}
 	set {room::%{_id}%::status} to "Waiting"
 	set {playerdata.%{_p}%::room} to {_id}
+	set {playerdata.%{_p}%::has_room} to {_id}
 
 	set {roomlist::%{_id}%} to {_id}
 
@@ -132,9 +133,18 @@ function room_create(id: string, room_name: string, private: boolean = false, p:
 
 #-----room delete------
 function room_delete(id: string):
+	loop world_players("%{_id}%_waiting_room"):
+		execute loop-player command "/back"	
+	loop world_players("%{_id}%_room_game_%{room::%{_id}%::map}%"):
+		execute loop-player command "/back"
 	delete {playerdata.%{room::%{_id}%::owner}%::room}
-	delete {room::%{_id}%::*}
+	delete {playerdata.%{room::%{_id}%::owner}%::has_room}
 	delete {roomlist::%{_id}%}
+	command "/mv delete %{_id}%_waiting_room"
+	command "/mv confirm"
+	command "/mv delete %{_id}%_room_game_%{room::%{_id}%::map}%"
+	command "/mv confirm"
+	delete {room::%{_id}%::*}
 
 #---------
 #ROom Join
@@ -155,6 +165,28 @@ function show_room_list(p: player):
 		else:
 			set slot {_slot} of {_p}'s current inventory to {_size} of skull of {room::%loop-value%::owner} named "&3%{room::%loop-value%::name}%" with lore "&6Status: &5%{room::%loop-value%::status}%" and "&6Private: &9%{room::%loop-value%::private}%"
 		add 1 to {_slot}
+
+#------room controll------
+function room_join(p: player, id: string):
+	command "/mv tp %{_p}% %{_room}%_waiting_room"
+	set {playerdata.%{_p}%::room} to {_id}
+
+	wait 1 tick
+
+	clear {_p}'s inventory
+	teleport {_p} to {room::%{_id}%::waiting_room_spawn_location}
+	send "&e%{_p}% &9Has Joined Room" to world_players("%{_id}%_waiting_room")
+	if {room::%{_id}%::status} is "Waiting":
+		#Waitingのみ全員更新
+		loop world_players("%{_id}%_waiting_room"):
+			show_room_scoreborad(loop-player, {_id})
+	room_item({_p})
+
+function room_quit(p: player):
+	teleport {_p} to {lobby}
+	delete {playerdata.%{_p}%::room}
+	clear {_p}'s inventory
+	set gamemode of {_p} to adventure
 
 #------room functions-----
 function show_room_scoreborad(p: player, id: string):

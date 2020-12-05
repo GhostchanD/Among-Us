@@ -10,7 +10,7 @@ worlds:
     respawnWorld: ''
     allowWeather: 'true'
     difficulty: PEACEFUL
-    spawning: &id017
+    spawning: &id021
       ==: MVSpawnSettings
       animals:
         ==: MVSpawnSubSettings
@@ -22,7 +22,7 @@ worlds:
         spawn: 'false'
         spawnrate: '-1'
         exceptions: []
-    entryfee: &id018
+    entryfee: &id022
       ==: MVEntryFee
       amount: '0.0'
       currency: '-1'
@@ -32,7 +32,7 @@ worlds:
     portalForm: ALL
     gameMode: ADVENTURE
     keepSpawnInMemory: 'true'
-    spawnLocation: &id019
+    spawnLocation: &id023
       ==: MVSpawnLocation
       x: 1088.0
       y: 4.0
@@ -41,7 +41,7 @@ worlds:
       yaw: 0.0
     autoLoad: 'true'
     bedRespawn: 'true'
-    worldBlacklist: &id020 []
+    worldBlacklist: &id024 []
     environment: NORMAL
     seed: '-4522172167490978844'
     generator: 'null'
@@ -191,54 +191,6 @@ worlds:
     generator: 'null'
     playerLimit: '-1'
     allowFlight: 'true'
-  ih6_waiting_room:
-    ==: MVWorld
-    hidden: 'false'
-    alias: ''
-    color: WHITE
-    style: NORMAL
-    pvp: 'true'
-    scale: '1.0'
-    respawnWorld: ''
-    allowWeather: 'true'
-    difficulty: EASY
-    spawning:
-      ==: MVSpawnSettings
-      animals:
-        ==: MVSpawnSubSettings
-        spawn: 'true'
-        spawnrate: '-1'
-        exceptions: []
-      monsters:
-        ==: MVSpawnSubSettings
-        spawn: 'true'
-        spawnrate: '-1'
-        exceptions: []
-    entryfee:
-      ==: MVEntryFee
-      amount: '0.0'
-      currency: '-1'
-    hunger: 'true'
-    autoHeal: 'true'
-    adjustSpawn: 'true'
-    portalForm: ALL
-    gameMode: SURVIVAL
-    keepSpawnInMemory: 'true'
-    spawnLocation:
-      ==: MVSpawnLocation
-      x: 1088.0
-      y: 4.0
-      z: -237.0
-      pitch: 0.0
-      yaw: 0.0
-    autoLoad: 'true'
-    bedRespawn: 'true'
-    worldBlacklist: []
-    environment: NORMAL
-    seed: '-4522172167490978844'
-    generator: 'null'
-    playerLimit: '-1'
-    allowFlight: 'true'
   4y2_waiting_room:
     ==: MVWorld
     hidden: 'false'
@@ -250,18 +202,18 @@ worlds:
     respawnWorld: ''
     allowWeather: 'true'
     difficulty: PEACEFUL
-    spawning: *id017
-    entryfee: *id018
+    spawning: *id021
+    entryfee: *id022
     hunger: 'true'
     autoHeal: 'true'
     adjustSpawn: 'true'
     portalForm: ALL
     gameMode: ADVENTURE
     keepSpawnInMemory: 'true'
-    spawnLocation: *id019
+    spawnLocation: *id023
     autoLoad: 'true'
     bedRespawn: 'true'
-    worldBlacklist: *id020
+    worldBlacklist: *id024
     environment: NORMAL
     seed: '-4522172167490978844'
     generator: 'null'

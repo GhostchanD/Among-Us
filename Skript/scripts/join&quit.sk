@@ -1,20 +1,7 @@
 #Join/Quit
 on join:
 	set the join message to "&e%player% Join the game"
-	if {game} is false:
-		teleport player to {spawn}
-		set player's gamemode to adventure
-		stop
-	if {game} is true:
-		send "&b観戦に参加しました。"
-		teleport player to {map.%{map}%.spawn}
-		set player's gamemode to spectator
-	else:
-		send "&bエラーが発生しています。"
-		send "%{game}% %{map.%{map}%.spawn}% %{spawn}%"
-		set player's gamemode to adventure
-		teleport player to {spawn}
-		stop
+	execute player command "/back"
 
 on quit:
 	set the quit message to "&e%player% left the game"
