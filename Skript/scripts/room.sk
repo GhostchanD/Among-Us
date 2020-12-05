@@ -130,6 +130,12 @@ function room_create(id: string, room_name: string, private: boolean = false, p:
 	teleport {_p} to {room::%{_id}%::waiting_room_spawn_location}
 	room_item({_p})
 
+#-----room delete------
+function room_delete(id: string):
+	delete {playerdata.%{room::%{_id}%::owner}%::room}
+	delete {room::%{_id}%::*}
+	delete {roomlist::%{_id}%}
+
 #---------
 #ROom Join
 #-----------
