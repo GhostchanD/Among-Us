@@ -1,1 +1,20 @@
 
+#TASK
+
+
+command /tasks [<player>] [<text>]:
+	trigger:
+		if arg 2 is set:
+			if arg 2 is "task-1":
+				#エンジン出力調整
+			if arg 2 is "task-2":
+				#ディストリビューターの校正	
+			if arg 2 is "task-3":
+				#チャートコース
+			if arg 2 is "task-4":
+			if arg 2 is "task-5":
+			if arg 2 is "task-6":
+			if arg 2 is "task-7":
+			if arg 2 is "task-8":
+			if arg 2 is "task-9":
+			
