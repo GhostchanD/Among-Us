@@ -1,0 +1,8 @@
+function map_create(id: string, map: string):
+	if {maplist::*} is not set:
+		send "&cError MAP is not set" to ops
+		stop
+	set {mv_bug_stop} to true #不具合が起きないようにフラグを設定
+	command "mv clone %{_map}% %{_id}%_%{_map}%_among_us"
+	set {room::%{_id}%::map} to {_map}
+	set {mv_bug_stop} to false

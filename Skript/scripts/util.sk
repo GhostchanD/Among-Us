@@ -1,0 +1,10 @@
+function size(obj: objects) :: integer:
+	if {_obj::*} is not set:
+		set {_size} to 0
+		return {_size}
+	loop {_obj::*}:
+		add 1 to {_size}
+	return {_size}
+
+function world_players(world: string) :: players:
+    return all players in world {_world} parsed as world

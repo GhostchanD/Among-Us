@@ -1,0 +1,13 @@
+command /setup:
+    permission: siso
+    trigger:
+        if "among_us_waiting_room" parsed as world is loaded:
+            send "&c既にセットアップがされています"
+            stop
+        command "/mv create among_us_waiting_room normal -t flat -a false"
+        wait 1 seconds
+        command "/mv modify set monsters false among_us_waiting_room"
+        command "/mv modify set pvp false among_us_waiting_room"
+        command "/mv modify set diff 0 among_us_waiting_room"
+        command "/mv modify set gamemode 2 among_us_waiting_room"
+        command "/mv modify set autoload true among_us_waiting_room"
