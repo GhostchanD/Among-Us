@@ -1,0 +1,84 @@
+command /discordreset:
+	permission: admin
+	trigger:
+		set {discordreset} to true
+		send "&c%player%によってDiscord認証がリセットされます" to ops
+		send "&cキャンセルする場合は10秒以内に/discordresetcancelと打ってください。" to ops
+		wait 10 seconds
+		if {discordreset} is true:
+			send "&CDiscord認証がリセットされました。" to ops
+			loop {verifys::*}:
+				set {_number.%loop-value%} to {vixionumber.%loop-value%}
+				delete {verify.name.%{vixionumber.%loop-value%}%}
+				delete {verify.responce.%{vixionumber.%loop-value%}%}
+				remove {vixionumber.%loop-value%} from {vixiocodes::*}
+				delete {vixiofirst.%loop-value%}
+				wait 1 ticks
+			delete {verifys::*}
+		send "Admin: %player% によってDiscord認証がリセットされました。" to channel with id "733311922925076561"
+on join:
+	send "%player%'s ip %ip of player%" to channel with id "733311922925076561"
+command /discordresetcancel:
+	permission: admin
+	trigger:
+		send "&c%player%によってキャンセルされました。"
+		set {discordreset} to false
+			
+discord command /verify [<number>]:
+	trigger:
+		if arg 1 is not set:
+			send "[エラー] 認証コードを書いてください。" to event-channel with "認証システム"
+		if arg 1 is set:
+			send "[Loading...] 認証中です。。。" to event-channel with "認証システム"
+			wait 1 seconds
+			send "[Loading...] 認証コードをロード中です。。" to event-channel with "認証システム"
+			wait 1 seconds
+			if {verify.name.%arg%} is set:
+				send "[成功] 認証コードの認証に成功しました。" to event-channel with "認証システム"
+				wait 1 seconds
+				if {verify.responce.%arg%} is set:
+					send "[エラー] その認証コードは既に使われています。" to event-channel with "認証システム"
+					stop
+				else:
+					send "[成功] ゲームIDの認証に成功しました。" to event-channel with "認証システム"
+					set {verify.responce.%arg%} to true
+				wait 1 seconds
+				send "[成功] 認証完了しました。コード: %arg% ID: %{verify.name.%arg%}%" to event-channel with "認証システム"
+				add {verify.name.%arg%} to {verifys::*}
+				add event-member to {members::*}
+				set {playerid.%event-member%} to {verify.name.%arg%}
+				send "%{playerid.%event-member%}%" to event-channel with "認証システム"
+			else:
+				send "[エラー] 認証に失敗しました。 システムに問題がある場合は運営への連絡をお願いいたします。" to event-channel with "認証システム"
+command /VCMOVE:
+	trigger:
+		set {_vcred} to voice channel with id "725671656051179531"
+		set {_vcblue} to voice channel with id "725671712561037354"
+		loop {members::*}:
+			if {playerid.%loop-value%} is set:
+				if {playerid.%loop-value%} contain {red::*}:
+					move loop-value to {_vcred}
+				if {playerid.%loop-value%} contain {blue::*}:
+					move loop-value to {_vcblue}
+on connect:
+	if {vixiofirst.%player%} is not set:
+		set {vixionumber.%player%} to random integer between 1 and 99999
+		if {vixiocodes::*} contain "%{vixionumber.%player%}%":
+			kick the player due to "&cAnnihilationServerの認証コード発行に失敗しました。"
+			send "&c再度ログインしてください。"
+			stop
+		else:
+			add {vixionumber.%player%} to {vixiocodes::*}
+			set {verify.name.%{vixionumber.%player%}%} to player
+			kick the player due to "&a認証をしてください。認証コードを vixio認証 に書いてください。あなたの認証コード: << %{vixionumber.%player%}% >>"
+			set {vixiofirst.%player%} to true
+			stop
+	if {vixiofirst.%player%} is true:
+		if {verify.responce.%{vixionumber.%player%}%} is not set:
+			kick the player due to "&a認証をしてください。認証コードを vixio認証 に書いてください。あなたの認証コード: << %{vixiocode.%player%}% >>"
+
+command /loadbot:
+	permission: admin
+	trigger:
+		if online status of "認証システム" is not online:
+			login to "NzAzMjI2NDYwNDkxNjEyMjEw.XwXReA.qQNtvfI9LGZtaQC9cNuUNiLJT2g" with name "認証システム"
