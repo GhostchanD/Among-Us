@@ -1,0 +1,10 @@
+#Game
+command /setting [<text>] [<text>] [<text>]:
+	permission: admin
+	trigger:
+		if arg 1 is not set:
+			send "&6Help"
+			send "&6/setting start"
+			send "&6/setting stop"
+			send "&6/setting reteleport"
+            stop

@@ -1,7 +1,14 @@
 #Join/Quit
 on join:
 	set the join message to "&e%player% Join the game"
-	execute player command "/back"
+	lobby_teleport(player)
 
 on quit:
 	set the quit message to "&e%player% left the game"
+
+function lobby_teleport(p: player):
+	set gamemode of player to adventure
+	teleport {_p} to {lobby}
+
+	
+
